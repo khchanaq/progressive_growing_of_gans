@@ -15,7 +15,7 @@ result_dir = 'results'
 # Theano config.
 
 theano_flags                                = dict()
-theano_flags['device']                      = 'cuda'            # New gpuarray backend.
+theano_flags['device']                      = 'cpu'            # New gpuarray backend.
 #theano_flags['device']                      = 'gpu'             # Old CUDA backend.
 theano_flags['force_device']                = 'True'            # Use GPU or die -- never fall back to CPU.
 theano_flags['dnn.enabled']                 = 'True'            # Use cuDNN or die -- never fall back to custom convolution ops.
@@ -24,11 +24,11 @@ theano_flags['warn_float64']                = 'warn'            # Give a warning
 theano_flags['assert_no_cpu_op']            = 'warn'            # Give a warning for CPU ops are used by accident (not sure if this actually works).
 theano_flags['allow_gc']                    = 'True'            # Conserve memory. Performance loss is alleviated by subsequent flags.
 theano_flags['gpuarray.preallocate']        = '0.90'            # Preallocate % of GPU memory to reduce cost at runtime (new gpuarray backend).
-theano_flags['lib.cnmem']                   = '0.80'            # Preallocate % of GPU memory to reduce cost at runtime (old CUDA backend).
+#theano_flags['lib.cnmem']                   = '0.80'            # Preallocate % of GPU memory to reduce cost at runtime (old CUDA backend).
 theano_flags['dnn.conv.algo_fwd']           = 'small'           # Gives the best performance.
 theano_flags['dnn.conv.algo_bwd_filter']    = 'deterministic'   # Necessary for deterministic training runs.
 theano_flags['dnn.conv.algo_bwd_data']      = 'deterministic'   # Necessary for deterministic training runs.
-theano_flags['nvcc.fastmath']               = 'True'            # Prefer speed over precision.
+#theano_flags['nvcc.fastmath']               = 'True'            # Prefer speed over precision.
 
 #----------------------------------------------------------------------------
 # Baseline configuration from
@@ -100,6 +100,10 @@ loss = dict(                                # Loss function:
 
 # Section 6.3: "High-resolution image generation using CelebA-HQ dataset"
 if 1:
+    run_desc = 'custom-image-512x512'
+    dataset = dict(h5_path='custom-image-512x512.h5', resolution=512, max_labels=0, mirror_augment=True, max_images=30000)
+
+if 0:
     run_desc = 'celeb-hq-1024x1024'
     dataset = dict(h5_path='celeba-hq-1024x1024.h5', resolution=1024, max_labels=0, mirror_augment=True, max_images=30000)
 

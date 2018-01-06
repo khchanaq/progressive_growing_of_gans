@@ -15,6 +15,7 @@ import theano
 from theano import tensor as T
 import lasagne
 import cPickle
+from theano import ifelse
 
 # NOTE: Do not reference config.py here!
 # Instead, specify all network parameters as build function arguments.
@@ -258,9 +259,9 @@ class LODSelectLayer(lasagne.layers.MergeLayer):
         t = self.cur_lod - self.first_incoming_lod
         r = v[hi]
         for i in xrange(hi-1, lo-1, -1): # i = hi-1, hi-2, ..., lo
-            r = theano.ifelse.ifelse(T.lt(t, i+1), v[i] * ((i+1)-t) + v[i+1] * (t-i), r)
+            r = ifelse.ifelse(T.lt(t, i+1), v[i] * ((i+1)-t) + v[i+1] * (t-i), r)
         if lo < hi:
-            r = theano.ifelse.ifelse(T.le(t, lo), v[lo], r)
+            r = ifelse.ifelse(T.le(t, lo), v[lo], r)
         return r
 
 #----------------------------------------------------------------------------

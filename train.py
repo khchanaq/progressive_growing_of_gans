@@ -73,6 +73,7 @@ def load_dataset_for_previous_run(result_subdir, **kwargs):
         for line in f:
             if line.startswith('dataset = '):
                 exec line
+    print ("Load Previous Dataset")
     return load_dataset(dataset, **kwargs)
 
 #----------------------------------------------------------------------------
